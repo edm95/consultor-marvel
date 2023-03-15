@@ -7,7 +7,7 @@
     "test": "jest",
     "build": "tsc",
     "prod": "npm run build && node ./dist/app.js",
-    "start": "ts-node ./app.ts"
+    "start": "ts-node app.ts"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "chalk": "^4.1.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "md5": "^2.3.0",
