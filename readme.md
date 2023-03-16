@@ -13,6 +13,7 @@ The project uses the following technologies:
 - Mongoose
 - MongoDB
 - Docker
+- Express
 
 ## Installation
 
