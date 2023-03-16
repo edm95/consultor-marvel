@@ -1,11 +1,9 @@
 import md5 from 'md5'
 import dotenv from 'dotenv'
-import mongoose, { IsItRecordAndNotAny } from 'mongoose'
 
 import { iSuperheroeModel, Superheroe } from './src/models/superheroe'
 import startDatabase from './src/connection'
 
-const MONGO_URI = `mongodb+srv://marvel_db_admin:${process.env.DB_PASSWORD}@cluster0.rfwt9fa.mongodb.net/marvel?retryWrites=true&w=majority`
 const PUBLIC_API_KEY = '065813b001507c8881791f771bece0b3'
 const TIMESTAMP_API = '1000'
 const LIMIT: number = 100

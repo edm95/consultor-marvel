@@ -3,17 +3,22 @@ import dotenv from "dotenv"
 import Logs from "./helpers/logs";
 
 dotenv.config();
-const MONGO_URI = `mongodb+srv://marvel_db_admin:${process.env.DB_PASSWORD}@cluster0.rfwt9fa.mongodb.net/marvel?retryWrites=true&w=majority`
 
-const startDatabase = async (): Promise<void> => {
+const { MONGO_URI, MONGO_URI_TEST, NODE_ENV } = process.env
+
+const connectionString = NODE_ENV === 'test' ? MONGO_URI_TEST : MONGO_URI
+
+const startDatabase = async (): Promise<any> => {
     try {
-        if (!MONGO_URI){
+        if (!connectionString){
           const error = new Error('Missing DB URI');
           Logs.error(error.message)
           throw error
         } else {
-          await mongoose.connect(MONGO_URI);
+          const db_connection = await mongoose.connect(connectionString);
+          
           Logs.info('Succesfully conected to database');
+          return db_connection
         }
     } catch (error){
         Logs.error(error);
@@ -21,5 +26,17 @@ const startDatabase = async (): Promise<void> => {
         throw error
       }
 }
+
+// if (!connectionString){
+//   Logs.error("Missing DB URI")
+// } else {
+//   mongoose.connect(connectionString).then(() =>
+//     Logs.info('Database conenected')
+//   )
+//   .catch((error) => {
+//     Logs.error('Error connecting to the database')
+//   })
+// }
+
 
 export default startDatabase;

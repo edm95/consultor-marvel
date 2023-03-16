@@ -1,60 +1,9 @@
 import { Schema, Document, Model, model } from 'mongoose';
 
-const comicsSchema: Schema = new Schema({
-    available: {
-        type: Number,
-        required: true
-    },
-    returned: {
-        type: Number,
-        required: true
-    },
-    items: {
-        type: [String]
-    }
-})
-
-const storiesSchema: Schema = new Schema({
-    available: {
-        type: Number,
-        required: true
-    },
-    returned: {
-        type: Number,
-        required: true
-    },
-    items: {
-        type: [String]
-    }
-})
-
-const eventsSchema: Schema = new Schema({
-    available: {
-        type: Number,
-        required: true
-    },
-    returned: {
-        type: Number,
-        required: true
-    },
-    items: {
-        type: [String]
-    }
-})
-
-const seriesSchema: Schema = new Schema({
-    available: {
-        type: Number,
-        required: true
-    },
-    returned: {
-        type: Number,
-        required: true
-    },
-    items: {
-        type: [String]
-    }
-})
+import { seriesSchema, iSeriesModel } from './series';
+import { comicsSchema, iComicModel } from './comics';
+import { storiesSchema, iStorieModel } from './stories';
+import { eventsSchema, iEventModel } from './events';
 
 
 const superheroeSchema: Schema = new Schema({
@@ -86,16 +35,23 @@ const superheroeSchema: Schema = new Schema({
         type: seriesSchema,
         required: true
     }
+}, {
+    toJSON: {
+        transform: function(doc, ret) {
+            delete ret._id;
+            delete ret.__v;
+          } 
+    }
 })
 
 export interface iSuperheroeModel extends Document {
     marvelId: Number,
     name: String,
     description: String,
-    comics: typeof comicsSchema,
-    stories: typeof storiesSchema,
-    events: typeof eventsSchema,
-    series: typeof seriesSchema
+    comics: iComicModel,
+    stories: iStorieModel,
+    events: iEventModel,
+    series: iSeriesModel
 }
 
-export const Superheroe: Model<iSuperheroeModel> = model<iSuperheroeModel>('superheroeCollection', superheroeSchema)
+export const Superheroe: Model<iSuperheroeModel> = model<iSuperheroeModel>('Superheroe', superheroeSchema)
